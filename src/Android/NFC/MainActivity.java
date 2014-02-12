@@ -296,7 +296,7 @@ public class MainActivity extends Activity {
 
                 // Get tag's UID:
                 byte[] uid = tag.getId();
-                tagInfo.append("Message_ID: ").append(StringUtils.convertByteArrayToHexString(uid)).append("\n\n");
+                //tagInfo.append("Message_ID: ").append(StringUtils.convertByteArrayToHexString(uid)).append("\n\n");
 
                 // Get tag's NDEF messages: The NDEF messages are passed as parameters (intent
                 // extra EXTRA_NDEF_MESSAGES) and have to be casted into an NdefMessage array.
@@ -336,10 +336,10 @@ public class MainActivity extends Activity {
                                     uri=Convert_String(uri);
                                     new HttpAsyncTask().execute(uri);
                                     //uri=POST("http://ecostamp.aosekai.net/api/dummy/",uri);
-                                    tagInfo.append("Message: \"");
-                                    tagInfo.append(uri);
-                                    tagInfo.append("\"\n");
-                                    tagInfo.append("End of Message :)");
+                                    //tagInfo.append("Message: \"");
+                                    //tagInfo.append(uri);
+                                    //tagInfo.append("\"\n");
+                                    //tagInfo.append("End of Message :)");
                                 }
                             }
                         }
@@ -347,9 +347,9 @@ public class MainActivity extends Activity {
                 }
 
                 // Show our tag detected dialog (with the tag information passed as parameter):
-                Bundle args = new Bundle();
-                args.putString(ARG_MESSAGE, tagInfo.toString());
-                showDialog(DIALOG_NEW_TAG, args);
+                //Bundle args = new Bundle();
+                //args.putString(ARG_MESSAGE, tagInfo.toString());
+                //showDialog(DIALOG_NEW_TAG, args);
             }
         }
     }
@@ -447,11 +447,15 @@ public class MainActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(String result){
-		//	etReply.setText(result);
+			//etReply.setText(result);
 			Toast.makeText(getBaseContext(), "Data Sent!!! " + result+ "Message End", Toast.LENGTH_LONG).show();
-                         //Bundle args = new Bundle();
-                         //args.putString(ARG_MESSAGE, result);
-                         //showDialog(DIALOG_NEW_TAG, args);
+                        StringBuilder tagInfo = new StringBuilder();
+                        tagInfo.append("Result: \"");
+                        tagInfo.append(result);
+                        tagInfo.append("\n");
+                        Bundle args = new Bundle();
+                        args.putString(ARG_MESSAGE, tagInfo.toString());
+                        showDialog(DIALOG_NEW_TAG, args);
 		}
 	}
     
@@ -490,6 +494,7 @@ public class MainActivity extends Activity {
 			
 			
 		} catch (Exception e){
+                        result = "Exception_Catched!"+ e.getLocalizedMessage();
 			Log.d("InputStream",e.getLocalizedMessage());
 		}
 		
